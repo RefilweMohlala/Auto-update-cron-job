@@ -1,63 +1,40 @@
-Automated EC2 Update Script with Cron Jobs & Email Notifications
-This project automates system maintenance tasks on an EC2 instance by scheduling regular updates and sending email notifications about the update status. The script first checks disk space, and based on its availability, either runs the updates or sends a failure notification.
+# Automated EC2 Update Script with Cron Jobs & Email Notifications
 
-Overview
-Disk Space Check: Ensures that there is sufficient space before proceeding with updates.
-Automated Weekly Updates: Runs apt update and apt upgrade commands every week via cron job.
-Email Notifications: Sends an email after each update, indicating whether the update was successful or if there were issues (e.g., low disk space or update failure).
-Error Handling: If disk space is low, it will stop the update and notify the user of the failure.
-Features
-Automated Weekly Maintenance: Updates your EC2 instance automatically every week.
-Disk Space Monitoring: Prevents updates from running if disk space is low.
-Email Alerts: Notifications for both successful updates and errors.
-Easy to Use: Just set it up once, and the cron job takes care of the rest.
-Getting Started
-Clone the repository:
+In this project, I automated the process of updating my EC2 instance running Ubuntu. The script performs a disk space check, runs system updates if the disk space is sufficient, and sends email notifications regarding the update status. If the disk space is low, it skips the update and sends a failure email instead.
 
-bash
-Copy
-Edit
-git clone https://github.com/yourusername/automated-ec2-update.git
-cd automated-ec2-update
-Script Setup:
+## Key Features
 
-The script checks disk space before proceeding with the update. If space is sufficient, it runs apt update and apt upgrade.
-The script will send an email to notify you of the update status. You will need to set up Postfix to enable email sending from the EC2 instance.
-Configure Email Notifications:
+- **Disk Space Check**: The script checks if there’s enough available disk space before running updates. If space is low, it skips the update and sends an email about the failure.
+- **Automated Weekly Updates**: Using a cron job, the system automatically runs updates every week, ensuring the instance stays up-to-date without manual intervention.
+- **Email Notifications**: Whether the update is successful or fails, I receive an email notification with the relevant status:
+  - **Success**: "Confirmation that your EC2 instance has been updated."
+  - **Failure (Low Disk Space)**: Notifies me if the update was skipped due to insufficient disk space.
 
-Set up Postfix for email configuration on your EC2 instance.
-Ensure you have App Passwords enabled if using Gmail to send notifications.
-Set Up Cron Job:
+## Technologies Used
 
-Schedule the cron job by editing your crontab:
-bash
-Copy
-Edit
-crontab -e
-Add the following line to schedule the script to run every week at 11:50 AM:
-bash
-Copy
-Edit
-50 11 * * 1 /path/to/your/script.sh
-Monitor the Logs:
+- **Postfix** for sending email notifications
+- **Cron Jobs** for weekly scheduling
+- **Bash** for scripting the update process
 
-Check your email inbox for weekly update status.
-Logs can also be monitored via /var/log/mail.log for troubleshooting.
-Example Email Notifications
-Success:
+## How It Works
 
-kotlin
-Copy
-Edit
-Good morning, this is confirmation that your EC2 instance has been updated. Enjoy your week and happy coding!
-Failure (Low Disk Space or Update Failure):
+1. **Disk Space Check**: Before running updates, the script checks the available disk space. If space is sufficient, it proceeds with updates.
+2. **Update Process**: The script runs `apt update` and `apt upgrade` to keep the system up to date.
+3. **Email Notifications**: After each update, an email is sent to confirm the success or failure of the update.
 
-pgsql
-Copy
-Edit
-Warning: Update failed due to low disk space on your EC2 instance.
-Please check the available space and resolve the issue.
-Dependencies
-Postfix for sending email notifications
-Linux Cron Jobs for scheduling tasks
-Bash for scripting
+This project simplifies EC2 maintenance by automating regular updates and ensuring I stay informed via email notifications about the health of my instance.
+
+## Screenshots
+log file 
+![log file](https://github.com/user-attachments/assets/0c1e9782-6c60-49c1-b657-f4ee84e7bc83)
+crontab setup
+![crontab setup](https://github.com/user-attachments/assets/01274d4b-0efb-4d38-bb60-6bf5acf2227c)
+cronjob script
+![cronjob script](https://github.com/user-attachments/assets/f2e1223f-6838-4cd0-932b-a600da0b55d0)
+script execution
+![cronjob execution](https://github.com/user-attachments/assets/9bf7cfb7-3bfd-423b-9147-188cd9ef1fe9)
+Success email output 
+![email output success](https://github.com/user-attachments/assets/3fc561d5-1fd5-4a60-87ab-962e064824b7)
+Failure email output 
+![email output failure](https://github.com/user-attachments/assets/dab61e55-85d2-4906-b124-021ae257ad49)
+
